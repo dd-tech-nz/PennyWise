@@ -1,4 +1,4 @@
-exports.seed = (knex) =>
+exports.seed = knex =>
   knex('expense')
     .del()
     .then(() => knex('income').del())
@@ -47,12 +47,48 @@ exports.seed = (knex) =>
     )
     .then(() =>
       knex('profiles').insert([
-        { id: 1, user_id: 1001, full_name: 'John Doe', avatar: 'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png' },
-        { id: 2, user_id: 1002, full_name: 'Jane Doe', avatar: 'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png' },
-        { id: 3, user_id: 1003, full_name: 'Sensei Matt', avatar: 'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png' },
-        { id: 4, user_id: 1004, full_name: 'Christy', avatar: 'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png' },
-        { id: 5, user_id: 1005, full_name: 'Jimmi', avatar: 'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png' },
-        { id: 6, user_id: 1006, full_name: 'David', avatar: 'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png' }
+        {
+          id: 1,
+          user_id: 1001,
+          full_name: 'John Doe',
+          avatar:
+            'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png'
+        },
+        {
+          id: 2,
+          user_id: 1002,
+          full_name: 'Jane Doe',
+          avatar:
+            'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png'
+        },
+        {
+          id: 3,
+          user_id: 1003,
+          full_name: 'Sensei Matt',
+          avatar:
+            'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png'
+        },
+        {
+          id: 4,
+          user_id: 1004,
+          full_name: 'Christy',
+          avatar:
+            'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png'
+        },
+        {
+          id: 5,
+          user_id: 1005,
+          full_name: 'Jimmi',
+          avatar:
+            'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png'
+        },
+        {
+          id: 6,
+          user_id: 1006,
+          full_name: 'David',
+          avatar:
+            'https://cdn2.iconfinder.com/data/icons/web-mobile-2-1/64/user_avatar_admin_web_mobile_business_office-512.png'
+        }
       ])
     )
     .then(() =>
@@ -121,12 +157,54 @@ exports.seed = (knex) =>
     )
     .then(() =>
       knex('income').insert([
-        { id: 1, user_id: 1001, income_type: 'primary', income_amount: 200 },
-        { id: 2, user_id: 1001, income_type: 'primary', income_amount: 200 },
-        { id: 3, user_id: 1001, income_type: 'primary', income_amount: 200 },
-        { id: 4, user_id: 1001, income_type: 'primary', income_amount: 200 },
-        { id: 5, user_id: 1001, income_type: 'primary', income_amount: 200 },
-        { id: 6, user_id: 1001, income_type: 'primary', income_amount: 200 }
+        {
+          id: 1,
+          user_id: 1001,
+          income_name: "Chrishty's fulltime slave",
+          frequency: 'Weekly',
+          income_type: 'primary',
+          income_amount: 200
+        },
+        {
+          id: 2,
+          user_id: 1001,
+          income_name: "Chrishty's fulltime slave",
+          frequency: 'Weekly',
+          income_type: 'primary',
+          income_amount: 200
+        },
+        {
+          id: 3,
+          user_id: 1001,
+          income_name: "Chrishty's fulltime slave",
+          frequency: 'Weekly',
+          income_type: 'primary',
+          income_amount: 200
+        },
+        {
+          id: 4,
+          user_id: 1001,
+          income_name: "Chrishty's fulltime slave",
+          frequency: 'Weekly',
+          income_type: 'primary',
+          income_amount: 200
+        },
+        {
+          id: 5,
+          user_id: 1001,
+          income_name: "Chrishty's fulltime slave",
+          frequency: 'Weekly',
+          income_type: 'primary',
+          income_amount: 200
+        },
+        {
+          id: 6,
+          user_id: 1001,
+          income_name: "Chrishty's fulltime slave",
+          frequency: 'Weekly',
+          income_type: 'primary',
+          income_amount: 200
+        }
       ])
     )
     .then(() =>
@@ -134,50 +212,50 @@ exports.seed = (knex) =>
         {
           id: 1,
           user_id: 1001,
-          categories: 'essential',
           expense_name: 'fuel',
-          frequency: 'weekly',
-          expense_amount: 200
+          categories: 'Essential',
+          frequency: 'Weekly',
+          expense_amount: 50
         },
         {
           id: 2,
           user_id: 1001,
-          categories: 'essential',
-          expense_name: 'fuel',
-          frequency: 'weekly',
+          expense_name: 'Grocery',
+          categories: 'Essential',
+          frequency: 'Weekly',
           expense_amount: 200
         },
         {
           id: 3,
           user_id: 1001,
-          categories: 'essential',
-          expense_name: 'fuel',
-          frequency: 'weekly',
-          expense_amount: 200
+          expense_name: 'Electric Bill',
+          categories: 'Essential',
+          frequency: 'Monthly',
+          expense_amount: 220
         },
         {
           id: 4,
           user_id: 1001,
-          categories: 'essential',
-          expense_name: 'fuel',
-          frequency: 'weekly',
-          expense_amount: 200
+          expense_name: 'Pizza',
+          categories: 'Non-Essential',
+          frequency: 'Weekly',
+          expense_amount: 40
         },
         {
           id: 5,
           user_id: 1001,
-          categories: 'essential',
-          expense_name: 'fuel',
-          frequency: 'weekly',
-          expense_amount: 200
+          expense_name: 'Gym',
+          categories: 'Non-Essential',
+          frequency: 'Weekly',
+          expense_amount: 9.99
         },
         {
           id: 6,
           user_id: 1001,
-          categories: 'essential',
-          expense_name: 'fuel',
-          frequency: 'weekly',
-          expense_amount: 200
+          expense_name: 'Car Insurance',
+          categories: 'Essential',
+          frequency: 'Yearly',
+          expense_amount: 800
         }
       ])
     )
