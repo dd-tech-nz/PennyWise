@@ -1,0 +1,11 @@
+.modalIncomeMainContainer {
+  max-width: 400px;
+  margin: auto;
+  font-family: 'Raleway', sans-serif;
+}
+
+.modalIncomeHeader {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: capitalize;
+}

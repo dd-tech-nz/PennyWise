@@ -5,6 +5,11 @@
 
 ## Welcome to PennyWise
 
-### Step 1: create .env file on the root folder and add the following:
+http://pennywise-eda.herokuapp.com/#/
 
-  - SECRET=*your secret*
+## Main Features
+
+- Manage your income
+- Manage your expenses
+- Manage your budget
+- Manage you goals

@@ -4,16 +4,20 @@ import { Transition } from 'semantic-ui-react'
 
 const items = [
   {
-    text: 'Tools To Manage Your Expenses',
-    img: '/images/image1.jpg'
+    // text: 'Tools To Manage Your Expenses',
+    img: '/images/income_img.JPG'
   },
   {
-    text: 'Tools To Manage Your Income',
-    img: '/images/image2.jpg'
+    // text: 'Tools To Manage Your Income',
+    img: '/images/expense_img.JPG'
   },
   {
-    text: 'Tools To Manage Your Mom',
-    img: '/images/image3.jpg'
+    // text: 'Tools To Manage Your Budget',
+    img: '/images/budget_img_1.JPG'
+  },
+  {
+    // text: 'Tools To Manage Your Budget',
+    img: '/images/budget_img_2.JPG'
   }
 ]
 
@@ -111,11 +115,14 @@ export default class Carousel extends Component {
           <div className='landingCarouselIndex'>
             {items.map((item, index) => {
               return (
-                <img key ={index}
+
+                <div key ={index}
                   onClick={() => this.setIndex(index)}
                   className={`landingCarouselIcon ${
                     this.state.currentIndex === index ? `visible` : `hidden`
-                  }`}src="./images/pennywise_logo.png" alt=""/>
+                  }`}>
+
+                </div>
 
               )
             })}

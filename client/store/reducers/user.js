@@ -1,11 +1,14 @@
-import { GET_USER_PROFILE } from '../types'
+import { GET_USER_PROFILE, UPDATE_USER_PROFILE } from '../types'
 
-const INITIAL = null
+const INITIAL = {
+  profile: null
+}
 
 export default (state = INITIAL, action) => {
   switch (action.type) {
     case GET_USER_PROFILE:
-      return action.payload
+    case UPDATE_USER_PROFILE:
+      return { ...state, profile: action.payload }
     default:
       return state
   }

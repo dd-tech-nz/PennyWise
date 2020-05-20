@@ -1,0 +1,212 @@
+:root {
+	--magic-number: 0.09719; /* tan(11°)/2 */
+	--content-width: 100vw;
+	--skew-padding: calc(var(--content-width) * var(--magic-number));
+}
+
+@media screen and (min-width: 42em) {
+	:root {
+		--content-width: 42em;
+	}
+}
+
+.budget {
+    background-color: #5E5371;
+    padding-bottom:10%;
+}
+
+
+.budget Hr.titles{
+    width:80%;
+    margin: 0 auto;
+    margin-bottom:20px;
+}
+
+.budgetCardMain{
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.39);
+    border-radius: 40px;
+    overflow: hidden;
+
+}
+.budgetGraphs{
+    min-height:100px;
+    width:100%;
+    padding:5rem;
+    background: rgba(255, 255, 255, 0.315);
+}
+
+.budgetGraphs h1{
+    text-align: center;
+    padding:20px;
+    padding-top:-20px;
+    letter-spacing: 5px;
+}
+
+.budgetGraphLabel{
+    max-width:150px;
+    min-width:150px;
+    font-size: 1.2rem;
+    padding-right:15px;
+    font-weight: bold;
+    color:rgb(255, 255, 255);
+    text-shadow:1px 1px 3px black;
+    height:80px;
+    display:flex;
+    align-items: center;
+    border-right:4px solid rgba(28,1,47,1);
+}
+
+.budgetGraphRow{
+    display:flex;
+    align-items: center;
+    height: 56px;
+    position:relative;
+}
+.budgetGraphBar{
+    height:50px;
+    margin-right:auto;
+    border-radius: 0 10px 10px 0;
+    position: relative;
+    left:0px;
+    top: 0px;
+    -webkit-animation: show-bar 1.2s 0.1s forwards;
+    -moz-animation: show-bar 1.2s 0.1s forwards;
+    animation: show-bar 1.2s 0.1s forwards;
+}
+
+ @-webkit-keyframes show-bar {
+    0% {
+      width: 0;
+    }
+  } 
+
+  @-moz-keyframes show-bar {
+    0% { width: 0; }
+ }
+
+ keyframes show-bar {
+    0% { width: 0; }
+ }
+
+
+
+
+ .budgetGraphBarContainer{
+    flex-grow: 1;
+    padding-top:10px;
+    padding-bottom:10px;
+    position:relative;
+    color:white;
+    font-weight:800;
+    font-size:1.3rem;
+}
+.budgetGraphBarRatio{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.topCardComponent {
+
+    width: 100%;
+    perspective: 800px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: auto;
+    transition: ease-in;
+
+    padding: 5rem;
+    background: rgba(0, 0, 0, 0.616);
+    background-image: linear-gradient(219deg, rgb(39, 9, 48) 50%, rgb(24, 7, 41) 65%);
+  
+}
+
+.topCardWrapper {
+    position: relative;
+    width:100%;
+    margin: 0 auto;
+    justify-content: space-between;
+    /* transform: skewY(-60deg); */
+}
+
+.diagonal-box:before {
+	position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-image: linear-gradient(45deg, #674C82, #000); 	
+    transform: skewY(-11deg);
+}
+
+.headingColumn {
+    color: white !important;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+    max-width: 50em;
+	margin: 0 auto;
+    position: relative;
+}
+
+.headingColumn h2 {
+    margin-top: 3rem !important;
+}
+
+.budgetRow{
+    display:flex;
+    margin-bottom:5px;
+}
+
+.colRight{
+    margin-left:auto;
+}
+
+.amountColumn {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.amountColumn h2 {
+   margin-bottom: 1px;
+} 
+
+.budgetHeaderContainer{
+    padding-bottom: 100px;
+    padding-top: 15%;
+}
+
+.budgetHeader{
+    text-align: center;
+    font-size:2.5rem;
+    margin-bottom:20px;
+    letter-spacing:5px;
+    color:white;
+}
+
+.budgetPTags{
+    text-align: center;
+    letter-spacing: 4.16px;
+    color: white;
+    margin: 0;
+    font-weight: 0;
+}
+.budget .table{
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+}
+
+button.ui.button.add{
+    max-width: 265px;
+    border-radius: 5px;
+}

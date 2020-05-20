@@ -9,3 +9,56 @@ body h1{
   background-color: #7363C8;
   color: white
 }
+.appContainer {
+  position: relative;
+  /* overflow-x: hidden; */
+}
+
+.fern {
+  height:500px;
+  right: -20px;
+  bottom: 0;
+  position: absolute;
+  z-index: 10;
+}
+.routesContainer{
+  min-height: 60vh
+}
+
+.appContainer .ui.table tr:hover{
+ font-weight: 800;
+}
+.appContainer .ui.table tr.active{
+  font-weight: 800;
+ }
+
+.divider {
+  background-color: white;
+  height: 3px;
+  margin: 8px auto 35px;
+}
+
+.modalMainContainer {
+  border-radius: 25px !important;
+  background-color: transparent !important;
+}
+
+ .modalContentContainer {
+  background-color: #322943 !important;
+  border-radius: 20px !important;
+  color: white;
+  min-height: 400px;
+  padding: 3rem !important;
+}
+
+.modalErrorContainerMsg {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.modalErrorDiv {
+  color: #c71f1f;
+  margin-bottom: 1.5rem;
+}

@@ -1,91 +1,122 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Form, Button } from 'semantic-ui-react'
+import { Message, Button } from 'semantic-ui-react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as yup from 'yup'
+import './auth.css'
 
+import Input from '../../FormComponents/Input'
 import { newUser } from '../../../store/actions/auth'
-import { setModalAuthOpen, setModalAuthForm } from '../../../store/actions/modal'
+import { setModalOpen, setModalName } from '../../../store/actions/modal'
 
 export class Signup extends Component {
   state = {
-    email: '',
-    password: '',
-    confirmPassword: '',
-    fullName: '',
-    avatar: ''
+    error: null
   }
 
-  handleOnChange = (e, { name, value }) => {
-    this.setState({ [name]: value })
-  }
-
-  handleOnSubmit = () => {
-    this.props.newUser(this.state)
-    this.props.setModalAuthOpen(false)
-    this.props.setModalAuthForm('')
+  handleOnSubmit = async (values) => {
+    try {
+      await this.props.newUser(values)
+      this.props.setModalOpen(false)
+      this.props.setModalName(null)
+    } catch (err) {
+      this.setState({ error: err.message })
+    }
   }
 
   render () {
-    const { email, password, confirmPassword, fullName, avatar } = this.state
     return (
-      <Form onSubmit={this.handleOnSubmit}>
-        <Form.Field>
-          <Form.Input
-            value={email}
-            onChange={this.handleOnChange}
-            name="email"
-            type="text"
-            placeholder="email"
-          />
-        </Form.Field>
-        <Form.Field>
-          <Form.Input
-            value={password}
-            onChange={this.handleOnChange}
-            name="password"
-            type="password"
-            placeholder="password"
-          />
-        </Form.Field>
-        <Form.Field>
-          <Form.Input
-            value={confirmPassword}
-            onChange={this.handleOnChange}
-            name="confirmPassword"
-            type="password"
-            placeholder="confirm password"
-          />
-        </Form.Field>
-        <Form.Field>
-          <Form.Input
-            value={fullName}
-            onChange={this.handleOnChange}
-            required
-            name="fullName"
-            type="text"
-            placeholder="full name"
-          />
-        </Form.Field>
-        <Form.Field>
-          <Form.Input
-            value={avatar}
-            onChange={this.handleOnChange}
-            name="avatar"
-            type="text"
-            placeholder="avatar"
-          />
-        </Form.Field>
-        <Button className="submitBtn" type="submit">
-          Submit
-        </Button>
-      </Form>
+      <Formik
+        initialValues={{
+          fullName: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        }}
+        onSubmit={this.handleOnSubmit}
+        validationSchema={SignupSchema}
+      >
+        <Form>
+          <div className="authMainContainer">
+            <div className="authHeader">{this.props.modal}</div>
+            <div className="divider" />
+            {this.state.error && (
+              <div className="modalErrorContainerMsg">
+                <Message negative>
+                  <Message.Header>{this.state.error}</Message.Header>
+                </Message>
+              </div>
+            )}
+
+            <Field
+              name="fullName"
+              type="text"
+              title="Full name"
+              placeholder="full name"
+              component={Input}
+            />
+            <div className="modalErrorDiv">
+              <ErrorMessage name="fullName" />
+            </div>
+            <Field
+              name="email"
+              type="text"
+              title="Email"
+              placeholder="email"
+              component={Input}
+            />
+            <div className="modalErrorDiv">
+              <ErrorMessage name="email" />
+            </div>
+            <Field
+              name="password"
+              type="password"
+              title="Password"
+              placeholder="password"
+              component={Input}
+            />
+            <div className="modalErrorDiv">
+              <ErrorMessage name="password" />
+            </div>
+            <Field
+              name="confirmPassword"
+              type="password"
+              title="Confirm Password"
+              placeholder="confirm password"
+              component={Input}
+            />
+            <div className="modalErrorDiv">
+              <ErrorMessage name="confirmPassword" />
+            </div>
+            <Button className="submitBtn" type="submit">
+              Submit
+            </Button>
+          </div>
+        </Form>
+      </Formik>
     )
   }
 }
 
+const mapStateToProps = (state) => ({
+  modal: state.modal.name
+})
+
 const mapDispatchToProps = {
-  setModalAuthOpen,
-  setModalAuthForm,
+  setModalOpen,
+  setModalName,
   newUser
 }
 
-export default connect(null, mapDispatchToProps)(Signup)
+const SignupSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Please enter a valid email')
+    .required('Please enter your email'),
+  password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  confirmPassword: yup.string()
+    .oneOf([yup.ref('password'), null], 'Password must match')
+    .required('Confirm Password is required')
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)

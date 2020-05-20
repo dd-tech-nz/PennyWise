@@ -2,35 +2,34 @@ const router = require('express').Router()
 const camelcaseKeys = require('camelcase-keys')
 
 const db = require('../db/fn/expense')
+const { isGetOwner, isWriteOwner } = require('../middleware')
 
 // GET - /api/v1/expense/:userId
 // Complete Postman Testing
-router.get('/:userId', (req, res) => {
+router.get('/:userId', isGetOwner, (req, res, next) => {
   db.getUserExpenses(req.params.userId)
     .then(camelcaseKeys)
-    .then(expenses => res.status(200).json(expenses))
-    .catch(err => {
+    .then((expenses) => res.status(200).json(expenses))
+    .catch((err) => {
       res.status(500).json('DATABASE ERROR: ' + err.message)
     })
 })
 
 // POST /api/v1/expense/:userId
 // Complete Postman Testing
-router.post('/:userId', (req, res) => {
-  const { expenseName, categories, expenseAmount, frequency } = req.body
-
-  db.addUserExpense({ user_id: req.params.userId, categories, expense_name: expenseName, expense_amount: expenseAmount, frequency })
+router.post('/:userId', isGetOwner, (req, res) => {
+  db.addUserExpense({ ...req.params, ...req.body })
     .then(camelcaseKeys)
     .then(expense => res.status(200).json(expense))
     .catch(err => {
-      res.status(500).json('DATABASE ERROR: ' + err.message)
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
 // PUT - /api/v1/expense/:expenseId
 // Complete Postman Testing
-router.put('/:expenseId', (req, res) => {
-  db.updateUserExpense(req.params.expenseId, req.body)
+router.put('/:expense', isWriteOwner, (req, res) => {
+  db.updateUserExpense(req.params.expense, req.body)
     .then(camelcaseKeys)
     .then(d => {
       res.status(200).json(d)
@@ -42,11 +41,11 @@ router.put('/:expenseId', (req, res) => {
 
 // DELETE - /api/v1/expense/:expenseId
 // Complete Postman Testing
-router.delete('/:expenseId', (req, res) => {
-  db.deleteUserExpense(req.params.expenseId)
+router.delete('/:expense', isWriteOwner, (req, res) => {
+  db.deleteUserExpense(req.params.expense)
     .then(camelcaseKeys)
     .then(() => {
-      res.status(200).json(req.params.expenseId)
+      res.status(200).json(req.params.expense)
     })
     .catch(err => {
       res.status(500).send('DATABASE ERROR: ' + err.message)

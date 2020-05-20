@@ -1,13 +1,23 @@
 .landing {
-  background: rgba(76, 64, 98, 0.9);
+  background-color: rgb(255, 255, 255);
   min-height: 50vh;
-  padding-bottom:100px;
   position: relative;
+  top:0px;
 }
 
 .landingSubContainer {
   padding-top:100px;
   min-height: 50vh;
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
   position: relative;
+  display:flex;
+  flex-wrap:wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.landingInfoBody p {
+  font-weight: bold;
+  font-size: 60px;
 }

@@ -1,53 +1,73 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
-
 import './profile.css'
 
+import { addCommas } from '../helpers'
+
+const r = (name) => (ac, va) => {
+  if (va.active) {
+    if (va.frequency === 'Monthly') {
+      va[name] = (Number(va[name]) * 12) / 52
+    }
+    if (va.frequency === 'Annually') {
+      va[name] = Number(va[name]) / 52
+    }
+    return ac + Number(va[name])
+  }
+  return ac
+}
+
 class BottomDetailsCardComponent extends React.Component {
+  state = {
+    income: this.props.income.reduce(r('incomeAmount'), 0),
+    expense: this.props.expense.reduce(r('expenseAmount'), 0)
+  }
+
   render () {
     const { history } = this.props
     return (
-      <div className='bottomCardDetailsContainer'>
-        <div className='bottomButtonContainer'>
+      <div className="bottomCardDetailsContainer">
+        <div className="bottomButtonContainer">
           <button
-            className='ui right labeled icon button'
+            className="ui right labeled icon button"
             onClick={() => history.push('/income')}
           >
-            <i className='right arrow icon'></i>
+            <i className="right arrow icon"></i>
             manage your income
           </button>
 
           <button
-            className='ui right labeled icon button'
+            className="ui right labeled icon button"
             onClick={() => history.push('/expense')}
           >
-            <i className='right arrow icon'></i>
+            <i className="right arrow icon"></i>
             manage your expenses
           </button>
 
           <button
-            className='ui right labeled icon button'
+            className="ui right labeled icon button"
             onClick={() => history.push('/budget')}
           >
-            <i className='right arrow icon'></i>
+            <i className="right arrow icon"></i>
             manage your budget
           </button>
         </div>
-        <div className='totalDisplayContainer'>
-          <h1 className='totalDisplayTitle'>An Overview of your Finances</h1>
-          <div className='totalDisplayBox'>
-            <div className='totalOverview'>
+        <div className="totalDisplayContainer">
+          <h1 className="totalDisplayTitle">An Overview of your Finances</h1>
+          <div className="totalDisplayBox">
+            <div className="totalOverview">
               <p>Total Income</p>
               <p>Total Expenses</p>
               <p>Total Budget</p>
               <p>Total Goals</p>
             </div>
-            <div className='moneyOverview'>
-              <p>$1,000,000</p>
-              <p>$999,999</p>
-              <p>$1 per week</p>
-              <p>10</p>
+            <div className="moneyOverview">
+              <p>{addCommas(this.state.income)} per week</p>
+              <p>{addCommas(this.state.expense)} per week</p>
+              <p>
+                {addCommas(this.state.income - this.state.expense)} per week
+              </p>
+              <p>{this.props.goal.length}</p>
             </div>
           </div>
         </div>
@@ -56,8 +76,4 @@ class BottomDetailsCardComponent extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { expense: state.expense }
-}
-
-export default connect(mapStateToProps)(withRouter(BottomDetailsCardComponent))
+export default withRouter(BottomDetailsCardComponent)

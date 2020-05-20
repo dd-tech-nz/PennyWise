@@ -1,5 +1,13 @@
-import { ADD_USER_INCOME, DELETE_USER_INCOME, GET_USER_INCOME, UPDATE_USER_INCOME, SELECT_USER_INCOME } from '../types'
+/* eslint-disable no-console */
+import {
+  ADD_USER_INCOME,
+  DELETE_USER_INCOME,
+  GET_USER_INCOME,
+  UPDATE_USER_INCOME,
+  SELECT_USER_INCOME
+} from '../types'
 import api from '../../api'
+import { loading } from './loading'
 
 export const getUserIncome = (userId) => async (dispatch) => {
   try {
@@ -8,8 +16,8 @@ export const getUserIncome = (userId) => async (dispatch) => {
       type: GET_USER_INCOME,
       payload: data
     })
+    dispatch(loading('income', false))
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log('error in getUserIncome Api Call')
   }
 }
@@ -21,33 +29,30 @@ export const selectUserIncome = (data) => (dispatch) => {
       payload: data
     })
   } catch (err) {
-    // eslint-disable-next-line no-console
-    console.log('error in addUserExpense Api Call')
+    console.log('error in addUserIncome Api Call')
   }
 }
 
-export const addUserIncome = (userId, userData) => async (dispatch) => {
+export const addUserIncome = (userId, incomeData) => async (dispatch) => {
   try {
-    const { data } = await api.post(`/income/${userId}`, userData)
+    const { data } = await api.post(`/income/${userId}`, incomeData)
     dispatch({
       type: ADD_USER_INCOME,
       payload: data
     })
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log('error in addUserIncome Api Call')
   }
 }
 
-export const updateUserIncome = (incomeId, userData) => async (dispatch) => {
+export const updateUserIncome = (incomeId, incomeData) => async (dispatch) => {
   try {
-    const { data } = await api.put(`/income/${incomeId}`, userData)
+    const { data } = await api.put(`/income/${incomeId}`, incomeData)
     dispatch({
       type: UPDATE_USER_INCOME,
       payload: data
     })
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log('error in updateUserIncome Api Call')
   }
 }
@@ -60,7 +65,6 @@ export const deleteUserIncome = (incomeId) => async (dispatch) => {
       payload: data
     })
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log('error in deleteUserIncome Api Call')
   }
 }

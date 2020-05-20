@@ -1,0 +1,11 @@
+.modalExpenseMainContainer {
+  max-width: 400px;
+  margin: auto;
+  font-family: 'Raleway', sans-serif;
+}
+
+.modalExpenseHeader {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: capitalize;
+}

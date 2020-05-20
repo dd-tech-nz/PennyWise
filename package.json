@@ -12,20 +12,19 @@
     "dev": "run-p dev:client dev:server",
     "dev:client": "webpack --watch",
     "dev:server": "nodemon server",
-    "start": "run-s build server",
+    "start": "npm run server",
     "build": "webpack",
     "server": "node server",
     "test": "jest --watchAll",
     "knex": "knex --knexfile server/db/knexfile.js",
+    "postinstall": "run-s db:reset build",
     "db:reset": "run-s db:delete db:migrate db:seed",
-    "db:migrate": "npm run knex migrate:latest",
-    "db:seed": "npm run knex seed:run",
+    "db:refresh": "run-s db:rollback db:migrate db:seed",
     "db:delete": "rm -f server/db/dev.sqlite3",
-    "postinstall": "run-s db:reset build"
+    "db:rollback": "npm run knex migrate:rollback",
+    "db:migrate": "npm run knex migrate:latest",
+    "db:seed": "npm run knex seed:run"
   },
-  "eslintIgnore": [
-    "bundle.js"
-  ],
   "babel": {
     "presets": [
       "@babel/preset-env",
@@ -34,7 +33,12 @@
     "plugins": [
       "@babel/plugin-proposal-class-properties",
       "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-transform-runtime"
+       ["@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ],
+      "recharts"
     ]
   },
   "jest": {
@@ -48,6 +52,7 @@
     "camelcase-keys": "^6.2.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "formik": "^2.1.4",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "knex": "^0.21.1",
@@ -59,7 +64,9 @@
     "react-scroll": "^1.7.16",
     "react-slick": "^0.25.2",
     "semantic-ui-react": "^0.88.2",
-    "sqlite3": "^4.2.0"
+    "snakecase-keys": "^3.2.0",
+    "sqlite3": "^4.2.0",
+    "yup": "^0.28.5"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -71,9 +78,9 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^25.2.6",
     "babel-loader": "^8.1.0",
+    "babel-plugin-recharts": "^1.2.1",
     "css-loader": "^3.5.3",
     "dotenv": "^8.2.0",
-    "dotenv-webpack": "^1.7.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "file-loader": "^6.0.0",
@@ -83,6 +90,7 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
+    "recharts": "^1.8.5",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "style-loader": "^1.2.1",

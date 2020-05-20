@@ -4,42 +4,62 @@ import './profile.css'
 
 import BottomDetailsCardComponent from './BottomDetailsCardComponent'
 import ProfileMain from './ProfileMain'
+import Loading from '../Loading'
 import { getUserProfile } from '../../store/actions/user'
+import { getUserBudget } from '../../store/actions/budget'
+import { loading } from '../../store/actions/loading'
 
 class ProfileContainer extends React.Component {
   componentDidMount () {
     this.props.getUserProfile(this.props.userId)
+    this.props.getUserBudget(this.props.userId)
+  }
+
+  componentWillUnmount () {
+    this.props.loading('user', true)
+    this.props.loading('budget', true)
   }
 
   render () {
-    if (!this.props.user) return <div>Loading...</div>
+    const { budget, user } = this.props.load
+    if (budget || user) return <Loading />
     return (
       <div className="profileMainContainer">
         <div className="profileHeader">
-          <h1 className="profileHeading">WELCOME TO YOUR PROFILE</h1>
-          <div className="profileHeadingLine"></div>
+          <div className="profileHeading">WELCOME TO YOUR PROFILE</div>
+          <hr className="profileHeaderLine"/>
           <p className="profileSummary">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-          </p>
-          <p className="profileSummary">
-              Lorem Ipsum has been the industry&#39;s standard dummy text ever
-              since the 1500s.
+            Manage your account and profile settings
           </p>
         </div>
 
         <div className="profileCardContainer">
-          <ProfileMain user={this.props.user}/>
-          <BottomDetailsCardComponent />
+          <ProfileMain user={this.props.user} />
+          <BottomDetailsCardComponent
+            expense={this.props.expense}
+            income={this.props.income}
+            goal = {this.props.goal}/>
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
+  load: state.loading,
   userId: state.auth.user.id,
-  user: state.user
+  user: state.user.profile,
+  expense: state.expense.all,
+  income: state.income.all,
+  goal: state.goal.all
 })
 
-export default connect(mapStateToProps, { getUserProfile })(ProfileContainer)
+const mapDispatchToProps = {
+  getUserProfile,
+  getUserBudget,
+  loading
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ProfileContainer
+)

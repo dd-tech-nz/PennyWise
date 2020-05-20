@@ -2,22 +2,24 @@ const router = require('express').Router()
 const camelcaseKeys = require('camelcase-keys')
 
 const db = require('../db/fn/goal')
+const { isGetOwner, isWriteOwner } = require('../middleware')
 
-// GET - api/v1/goal/
+// TODO FOR ADMIN
+// GET - api/v1/goals/
 // postman testing COMPLETE
-router.get('/', (req, res) => {
-  return db
-    .getAllGoals()
-    .then(camelcaseKeys)
-    .then((goals) => res.json(goals))
-    .catch(err => {
-      res.status(500).send(err.message)
-    })
-})
+// router.get('/', (req, res) => {
+//   return db
+//     .getAllGoals()
+//     .then(camelcaseKeys)
+//     .then((goals) => res.json(goals))
+//     .catch(err => {
+//       res.status(500).send(err.message)
+//     })
+// })
 
-// GET - /api/v1/goal/:userId
+// GET - /api/v1/goals/:userId
 // postman testing COMPLETE
-router.get('/:userId', (req, res) => {
+router.get('/:userId', isGetOwner, (req, res) => {
   return db
     .getUserGoals(req.params.userId)
     .then(camelcaseKeys)
@@ -27,9 +29,9 @@ router.get('/:userId', (req, res) => {
     })
 })
 
-// POST - /api/v1/goal/:userId
+// POST - /api/v1/goals/:userId
 // postman testing COMPLETE
-router.post('/:userId', (req, res) => {
+router.post('/:userId', isGetOwner, (req, res) => {
   const newGoal = req.body
   return db
     .addGoal({ user_id: req.params.userId, ...newGoal })
@@ -40,11 +42,11 @@ router.post('/:userId', (req, res) => {
     })
 })
 
-// PUT - /api/v1/goal/:userId
+// PUT - /api/v1/goals/:userId
 // postman testing COMPLETE
-router.put('/:goalId', (req, res) => {
+router.put('/:goals', isWriteOwner, (req, res) => {
   return db
-    .updateGoal(req.params.goalId, req.body)
+    .updateGoal(req.params.goals, req.body)
     .then(camelcaseKeys)
     .then(goal => res.status(200).json(goal))
     .catch(err => {
@@ -52,13 +54,13 @@ router.put('/:goalId', (req, res) => {
     })
 })
 
-// DELETE - /api/v1/goal/:goalId
+// DELETE - /api/v1/goals/:goalId
 // postman testing COMPLETE
-router.delete('/:goalId', (req, res) => {
+router.delete('/:goals', isWriteOwner, (req, res) => {
   return db
-    .deleteGoal(req.params.goalId)
+    .deleteGoal(req.params.goals)
     .then(camelcaseKeys)
-    .then(() => res.send(200).json(req.params.goalId))
+    .then(() => res.status(200).json(req.params.goals))
     .catch(err => {
       res.status(500).send(err.message)
     })

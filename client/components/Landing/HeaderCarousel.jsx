@@ -1,15 +1,12 @@
 import React from 'react'
 import Slider from 'react-slick'
-import slide1 from './images/image1.jpg'
-import slide2 from './images/image2.jpg'
-import slide3 from './images/image3.jpg'
 
 const Carrousel = () => {
   const settings = {
     dots: false,
     infinite: true,
     autoplay: true,
-    speed: 500
+    speed: 1000
   }
 
   return (
@@ -19,13 +16,24 @@ const Carrousel = () => {
         overflow: 'hidden'
       }}
     >
-
       <Slider {...settings}>
         <div>
           <div
             className="carrouselImage"
             style={{
-              background: `url(${slide1})`,
+              background: 'url(/images/slide1.png)',
+              height: `${window.innerHeight}px`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+          </div>
+        </div>
+        <div>
+          <div
+            className="carrouselImage"
+            style={{
+              background: 'url(/images/slide2.jpg)',
               height: `${window.innerHeight}px`,
               backgroundSize: 'cover',
               backgroundPosition: 'center'
@@ -36,27 +44,14 @@ const Carrousel = () => {
           <div
             className="carrouselImage"
             style={{
-              background: `url(${slide2})`,
+              background: 'url(/images/slide3.jpg)',
               height: `${window.innerHeight}px`,
               backgroundSize: 'cover',
               backgroundPosition: 'center'
-            }}
-          ></div>
+            }}>
+          </div>
         </div>
-        <div>
-          <div
-            className="carrouselImage"
-            style={{
-              background: `url(${slide3})`,
-              height: `${window.innerHeight}px`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          ></div>
-        </div>
-
       </Slider>
-
     </div>
   )
 }

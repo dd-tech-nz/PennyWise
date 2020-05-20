@@ -1,6 +1,5 @@
 import React from 'react'
 import { HashRouter, Route } from 'react-router-dom'
-import './app.css'
 
 import Navbar from './Navbar'
 import Footer from './Footer'
@@ -8,8 +7,10 @@ import Landing from './Landing'
 import Profile from './Profile'
 import Expense from './Expense'
 import Income from './Income'
-// import Budget from './Budget'
+import Budget from './Budget'
 import withAuth from './HOC/withAuth'
+import MainModalForm from './MainModalForm'
+import LoadingIndicator from './Loading'
 
 const App = () => {
   return (
@@ -21,6 +22,9 @@ const App = () => {
           <Route exact path="/profile" component={withAuth(Profile)} />
           <Route exact path="/expense" component={withAuth(Expense)} />
           <Route exact path="/income" component={withAuth(Income)} />
+          <Route exact path="/budget" component={withAuth(Budget)} />
+          <Route exact path="/loading" component={LoadingIndicator}/>
+          <MainModalForm />
         </div>
       </HashRouter>
       <Footer />

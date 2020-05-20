@@ -1,10 +1,25 @@
+/* eslint-disable no-console */
 const connection = require('../connection')
+const snakeCaseKeys = require('snakecase-keys')
+const convertArrToNumber = (goals) =>
+  goals.map((g) => ({
+    ...g,
+    target_budget: parseFloat(g.target_budget),
+    current_amount: parseFloat(g.current_amount),
+    budget_distribution: parseFloat(g.budget_distribution)
+  }))
+const convertToNumber = (goal) =>
+  ({
+    ...goal,
+    target_budget: parseFloat(goal.target_budget),
+    current_amount: parseFloat(goal.current_amount),
+    budget_distribution: parseFloat(goal.budget_distribution)
+  })
 
 function getAllGoals (db = connection) {
   return db('goals')
     .select()
     .catch(err => {
-      // eslint-disable-next-line no-console
       console.error(err)
     })
 }
@@ -13,21 +28,19 @@ function getUserGoals (userId, db = connection) {
   return db('goals')
     .where('user_id', userId)
     .select()
-    .catch(err => {
-      // eslint-disable-next-line no-console
+    .then(convertArrToNumber)
+    .catch((err) => {
       console.error(err)
     })
 }
 
 function addGoal (data, db = connection) {
   return db('goals')
-    .insert(data)
-    .then(([id]) => db('goals')
-      .where('id', id)
-      .select()
-      .first())
-    .catch(err => {
-      // eslint-disable-next-line no-console
+    .insert(snakeCaseKeys(data))
+    .returning('id')
+    .then(([id]) => db('goals').where('id', id).select().first())
+    .then(convertToNumber)
+    .catch((err) => {
       console.error(err)
     })
 }
@@ -35,13 +48,10 @@ function addGoal (data, db = connection) {
 function updateGoal (goalId, data, db = connection) {
   return db('goals')
     .where('id', goalId)
-    .update(data)
-    .then(() => db('goals')
-      .where('id', goalId)
-      .select()
-      .first())
-    .catch(err => {
-      // eslint-disable-next-line no-console
+    .update(snakeCaseKeys(data))
+    .then(() => db('goals').where('id', goalId).select().first())
+    .then(convertToNumber)
+    .catch((err) => {
       console.error(err)
     })
 }
@@ -51,7 +61,6 @@ function deleteGoal (goalId, db = connection) {
     .where('id', goalId)
     .del()
     .catch(err => {
-    // eslint-disable-next-line no-console
       console.error(err)
     })
 }

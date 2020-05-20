@@ -1,39 +1,44 @@
-.incomeHeader{
-  padding-top:10%;
-  padding: bottom 3%;
-  color:white;
- 
+/* BODY BACKGROUND */
+.income{
+  background-color: #5E5371;
+  min-height: 600px;
+  padding: 6rem 0;
 }
+
+/* HEADER */
+
 .incomeHeaderTitle{
   text-align: center;
   font-size:2.5rem;
   margin-bottom:20px;
+  padding-top: 7.5%;
   letter-spacing:5px;
-  text-shadow: 2px 2px 3px rgb(24, 24, 24);
-  font-weight:600;
-
 }
+
+.incomeHeader{
+  color:white;
+}
+
 .incomeHeaderText{
-  width:70%;
+  max-width: 90%;
+  text-align: center;
+  letter-spacing: 4.5px;
   margin: 0 auto;
 }
+
 .incomeHeader Hr{
   width:80%;
   margin: 0 auto;
   margin-bottom:20px;
 }
-.incomeTable{
-  padding-bottom:10%;
-}
 
-/* .incomeButtons .button{
-  display: flex;
-  margin-top:50px;
-  margin-bottom:50px;
-} */
+/* ============== */
+
+/* BUTTONS */
 
 .incomeButtons{
   display: flex;
+  justify-content: center;
   margin-top:50px;
   margin-bottom:50px;
 }
@@ -44,44 +49,51 @@
   margin-right:20px;
   letter-spacing: 10px;
   padding:15px;
-  border-radius:30px;
+  border-radius:5px;
   font-size: 0.8rem;
-  background: #bd9cdf !important;
+  transition: .5s;
+  background: #333333 !important;
   color:white;
-  text-shadow: 1px 1px 2px black;
+}
+
+.incomeButtons button.ui.button.incomeAdd.toggleOnAndOff:focus{
+  background:#434343 !important;
+  color: white;
 }
 
 .incomeButtons .button:hover{
-  background:#af6ef0 !important;
+  background:#434343 !important;
+  color: white;
+  transition: all .2 ease-in-out;
+  transform: scale(1.05);
 }
+
 .incomeButtons .button.add{
   background:rgb(219, 219, 219) !important;
   color:black;
+  align-items: center !important;
   text-shadow:none;
 }
+
 .incomeButtons .button.add:hover{
   background:white !important;
 }
 
-.income{
-  background: rgb(44,6,77);
-  background: linear-gradient(0deg, rgba(226,191,117,1) 0%, rgba(44,6,77,1) 100%);
+/* ============ */
+
+/* TABLE */
+
+.incomeTable{
+  padding-bottom:2rem;
 }
 
-/* TABLE STYLES */
-.income .ui.single.line.table th{
-  background:#9770be;
-  color:white;
-  text-decoration: solid;
+.income .table{
+  border-radius: 6px;
+  overflow: hidden;
+  text-align: center;
 }
-.income .ui.single.line.table td{
-  background:rgb(34, 33, 36);
-  color:white;
-  text-decoration: solid;
+
+.pointerCursor {
+  cursor: pointer;
 }
-.income .ui.table{
-  background:none !important;
-  border-radius:20px;
-  overflow:hidden;
-  text-align:center;
-}
+

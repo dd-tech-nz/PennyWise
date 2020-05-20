@@ -17,9 +17,9 @@ export const authUser = (user) => async (dispatch) => {
     localStorage.setItem('jwtToken', token)
     setAuthorizationToken(token)
     dispatch(setAuth(userData))
-    return userData.id
+    return response.status
   } catch (err) {
-    throw new Error(err.response.data.message)
+    throw new Error(err.response.data)
   }
 }
 
@@ -30,9 +30,9 @@ export const newUser = (data) => async (dispatch) => {
     localStorage.setItem('jwtToken', token)
     setAuthorizationToken(token)
     dispatch(setAuth(userData))
-    return userData.id
+    return response.status
   } catch (err) {
-    throw new Error(err.response.data.message)
+    throw new Error(err.response.data)
   }
 }
 

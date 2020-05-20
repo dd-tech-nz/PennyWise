@@ -1,17 +1,12 @@
 import React from 'react'
-import Info from './Info'
-import Carousel from './Carousel'
 import Header from './Header'
 import './landing.css'
-
+import Content from './Content'
 const Landing = () => {
   return (
     <div className = "landing">
-      <Header/>
-      <div className='landingSubContainer'>
-        <Info />
-        <Carousel/>
-      </div>
+      <Header />
+      <Content />
     </div>
   )
 }

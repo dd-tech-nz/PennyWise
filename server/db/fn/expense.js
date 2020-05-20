@@ -1,54 +1,52 @@
+/* eslint-disable no-console */
 const connection = require('../connection')
+const snakeCaseKeys = require('snakecase-keys')
+const convertArrToNumber = (expense) =>
+  expense.map((e) => ({
+    ...e,
+    expense_amount: parseFloat(e.expense_amount)
+  }))
+const convertToNumber = (expense) => ({
+  ...expense,
+  expense_amount: parseFloat(expense.expense_amount)
+})
 
-function getAllExpenses (db = connection) {
-  return db('expense')
-    .select()
-    .catch(err => {
-      // eslint-disable-next-line no-console
-      console.error(err)
-    })
-}
+// function getAllExpenses (db = connection) {
+//   return db('expense')
+//     .select()
+//     .catch(err => {
+//       console.error(err)
+//     })
+// }
 
 function getUserExpenses (userId, db = connection) {
   return db('expense')
     .where('user_id', userId)
     .select()
-    .catch(err => {
-      // eslint-disable-next-line no-console
+    .then(convertArrToNumber)
+    .catch((err) => {
       console.error(err)
     })
 }
 
 function addUserExpense (data, db = connection) {
   return db('expense')
-    .insert(data)
-    .then(([id]) =>
-      db('expense')
-        .where('id', id)
-        .select()
-        .first()
-    )
-    .catch(err => {
-      // eslint-disable-next-line no-console
-      console.error(err)
+    .insert(snakeCaseKeys(data))
+    .returning('id')
+    .then(([id]) => db('expense').where('id', id).select().first())
+    .then(convertToNumber)
+    .catch((err) => {
+      console.error(err.message)
     })
 }
 
 function updateUserExpense (expenseId, data, db = connection) {
   return db('expense')
     .where('id', expenseId)
-    .update({
-      id: data.id,
-      user_id: data.userId,
-      expense_name: data.expenseName,
-      categories: data.categories,
-      frequency: data.frequency,
-      expense_amount: data.expenseAmount,
-      active: data.active
-    })
+    .update(snakeCaseKeys(data))
     .then(() => db('expense').where('id', expenseId).select().first())
+    .then(convertToNumber)
     .catch((err) => {
-      // eslint-disable-next-line no-console
       console.error(err)
     })
 }
@@ -58,13 +56,11 @@ function deleteUserExpense (expenseId, db = connection) {
     .where('id', expenseId)
     .del()
     .catch(err => {
-      // eslint-disable-next-line no-console
       console.error(err)
     })
 }
 
 module.exports = {
-  getAllExpenses,
   getUserExpenses,
   addUserExpense,
   updateUserExpense,
